@@ -8,22 +8,28 @@ dt = 0
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
-    x =0
+    x = 0
+    
     while x == 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         log_state()
         screen.fill ("black")
-        player.draw(screen)
+        
+        for objects in drawable:
+            objects.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60)/1000
-        player.update(dt)
+        updatable.update(dt)
 
 if __name__ == "__main__":
     main()
